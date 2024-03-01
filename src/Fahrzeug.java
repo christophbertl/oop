@@ -7,10 +7,11 @@ public class Fahrzeug {
 	private double mietpreis; 
 	private int sitzplatz;
 	private int kilometerstand; 
-	private String gemietetVon;
+	private String gemietetVon = null;
+	private String kennzeichen;
 	
 	
-	public Fahrzeug (String marke, String modell, String farbe, 
+	public Fahrzeug (String marke, String modell, String farbe, String kennzeichen,
 			int mietpreis, int sitzplatz, int kilometerstand)	{
 	
 	
@@ -20,6 +21,7 @@ public class Fahrzeug {
 	this.mietpreis = mietpreis;
 	this.sitzplatz = sitzplatz;
 	this.kilometerstand = kilometerstand;
+	this.kennzeichen = kennzeichen;
 }
 
 
@@ -104,6 +106,13 @@ public String getAll() {
 	return marke + " " + modell + "; " + farbe + "; " + sitzplatz + 
 			"; " + mietpreis ;
 }
+
+public String getKennzeichen () {
+	
+	return kennzeichen;
+}
+
+
 
 
 }

@@ -24,7 +24,22 @@ public class Main {
 		return scanner.nextLine();
 	}
 	
+	// Rückgabe Auto 
 	
+	public static void Automieten (String kennzeichen, String nutzerID, List<Fahrzeug> fahrzeuge) {
+	
+		
+		for (int i=0; i< fahrzeuge.size(); i++) {
+			if (fahrzeuge.get(i).getKennzeichen().equals(kennzeichen)) {
+				
+				fahrzeuge.get(i).setGemietetVon(nutzerID);
+				
+				break;
+				}
+			}
+	
+		
+	}
 	
 	
 	public static void main(String[] args) {
@@ -32,8 +47,9 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 		String eingabe;
 		List<Fahrzeug> fahrzeuge = new ArrayList<>();
-		String fahrzeug, name, vorname;
-		String marke, modell, farbe;
+		List<Customer> customers = new ArrayList<>();
+		String fahrzeug, customer, name, surname, nutzerID;
+		String marke, modell, farbe, kennzeichen;
 		int mietpreis, sitzplatz, kilometerstand;
 
 		while (true) {
@@ -50,6 +66,9 @@ public class Main {
 				modell = scanner.nextLine();
 				System.out.print("    Farbe:");
 				farbe = scanner.nextLine();
+				System.out.print("    Kennzeichen:");
+				kennzeichen = scanner.nextLine();
+				
 				
 				// TODO: Exception!
 				System.out.print("    Mietpreis:");
@@ -59,9 +78,9 @@ public class Main {
 				System.out.print("    KM-Stand:");
 				kilometerstand = scanner.nextInt();
 				
-			
+		
 				// create object
-				Fahrzeug f = new Fahrzeug(marke, modell, farbe, mietpreis, 
+				Fahrzeug f = new Fahrzeug(marke, modell, farbe, kennzeichen, mietpreis, 
 						sitzplatz, kilometerstand);
 				
 				// add f to list
@@ -75,10 +94,21 @@ public class Main {
 				System.out.print("    Name:");
 				name = scanner.nextLine();
 				System.out.print("    Vorname:");
-				vorname = scanner.nextLine();
+				surname = scanner.nextLine();
+	
+				
+				//create object
+				Customer c = new Customer( name, surname);
+				
+				customers.add(c);
+				
+				System.out.println(c.getID());
+							
+				
+				
+				
 				
 				// create object
-				//CompanyContact compContact = new CompanyContact(name, vorname);
 				
 				// add mail address if valid to object and add object to list
 				//contacts = addMail(contacts, compContact, scanner);
@@ -89,7 +119,7 @@ public class Main {
 				System.out.print("    verfügbare Fahrzeuge:");
 				// print contact(s) from list
 				for (int i=0; i< fahrzeuge.size(); i++) {
-					if (fahrzeuge.get(i).getGemietetVon() == "") {
+					if (fahrzeuge.get(i).getGemietetVon() == null) {
 						System.out.println(fahrzeuge.get(i).getAll());
 					}
 				}
@@ -99,17 +129,37 @@ public class Main {
 			else if (eingabe.equals("4")) {
 				// get name and surname
 				System.out.println("    Fahrzeug mieten");
-				System.out.print("    gemietetes Fahrzeug:");
-				fahrzeug = scanner.nextLine();
 				
+				System.out.print("    Kennzeichen angeben:");
+				kennzeichen = scanner.nextLine();
+				
+				System.out.print("    NutzerID angeben:");
+				nutzerID = scanner.nextLine();
+				
+			
+				
+				Automieten(kennzeichen, nutzerID, fahrzeuge);
+			
 			}
+			
+			
 			
 			else if (eingabe.equals("5")) {
 				// get name and surname
 				System.out.println("    Fahrzeug zurückgeben");
-				System.out.print("    zurück gegebenes Fahrzeug:");
-				fahrzeug = scanner.nextLine();
-				}
+				System.out.print("    Kennzeichen des zurück gegebenen Fahrzeugs:");
+				kennzeichen = scanner.nextLine();
+			
+			
+				Automieten(kennzeichen, null, fahrzeuge);
+			
+			
+			}
+		
+			
+			
+			
+			
 			
 			
 			
@@ -121,9 +171,14 @@ public class Main {
 		}
 		System.out.println("beendet");
 		scanner.close();
-	}
+	
 
-}
+		
+	}
+	
+} //main
+	
+
 
 	
 	
