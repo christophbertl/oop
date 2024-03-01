@@ -7,6 +7,7 @@ public class Fahrzeug {
 	private double mietpreis; 
 	private int sitzplatz;
 	private int kilometerstand; 
+	private String gemietetVon;
 	
 	
 	public Fahrzeug (String marke, String modell, String farbe, double mietpreis, int sitzplatz, int kilometerstand)	{
@@ -85,6 +86,14 @@ public int getKilometerstand () {
 public void setKilometerstand (int kilometerstand) {
 	
 	this.kilometerstand = kilometerstand;
+}
+
+public void setGemietetVon(String customerID) {
+	gemietetVon = customerID;
+}
+
+public String getGemietetCon() {
+	return gemietetVon;
 }
 
 
