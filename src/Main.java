@@ -26,7 +26,7 @@ public class Main {
 	
 	// Rückgabe Auto 
 	
-	public static void Automieten (String kennzeichen, String nutzerID, List<Fahrzeug> fahrzeuge) {
+	public static void Automieten (String kennzeichen, String nutzerID, List<Fahrzeug> fahrzeuge, int km) {
 	
 		
 		for (int i=0; i< fahrzeuge.size(); i++) {
@@ -34,12 +34,16 @@ public class Main {
 				
 				fahrzeuge.get(i).setGemietetVon(nutzerID);
 				
-				break;
+			
+			if (nutzerID == null)  { fahrzeuge.get(i).setKilometerstand(km);
+							
 				}
+				
+					break;
 			}
-	
+			}
+		}
 		
-	}
 	
 	
 	public static void main(String[] args) {
@@ -48,7 +52,7 @@ public class Main {
 		String eingabe;
 		List<Fahrzeug> fahrzeuge = new ArrayList<>();
 		List<Customer> customers = new ArrayList<>();
-		String fahrzeug, customer, name, surname, nutzerID;
+		String name, surname, nutzerID;
 		String marke, modell, farbe, kennzeichen;
 		int mietpreis, sitzplatz, kilometerstand;
 
@@ -70,13 +74,19 @@ public class Main {
 				kennzeichen = scanner.nextLine();
 				
 				
-				// TODO: Exception!
+				
+				
+				try { 
+						
+				
 				System.out.print("    Mietpreis:");
 				mietpreis = scanner.nextInt();
 				System.out.print("    Sitzplätze:");
 				sitzplatz = scanner.nextInt();
 				System.out.print("    KM-Stand:");
 				kilometerstand = scanner.nextInt();
+				
+				
 				
 		
 				// create object
@@ -85,6 +95,14 @@ public class Main {
 				
 				// add f to list
 				fahrzeuge.add(f);
+				
+				
+
+				} catch (java.util.InputMismatchException ex) { 
+			
+					System.out.println("Fehler: muss eine Zahl sein");
+				
+		}
 				
 			}
 			// create business contact
@@ -138,9 +156,9 @@ public class Main {
 				
 			
 				
-				Automieten(kennzeichen, nutzerID, fahrzeuge);
+				Automieten(kennzeichen, nutzerID, fahrzeuge, 0);
 			
-			}
+				}
 			
 			
 			
@@ -149,26 +167,25 @@ public class Main {
 				System.out.println("    Fahrzeug zurückgeben");
 				System.out.print("    Kennzeichen des zurück gegebenen Fahrzeugs:");
 				kennzeichen = scanner.nextLine();
+				System.out.print("    Kilometerstand angeben");
+				kilometerstand = scanner.nextInt();
 			
 			
-				Automieten(kennzeichen, null, fahrzeuge);
+				Automieten(kennzeichen, null, fahrzeuge, kilometerstand);
 			
 			
-			}
+				}
 		
-			
-			
-			
-			
-			
-			
 			
 			
 			else if (eingabe.equals("6")) {
 				break;
-			}
+				
+				}
 		
 		}
+		
+		
 		System.out.println("beendet");
 		scanner.close();
 	

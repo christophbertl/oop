@@ -104,7 +104,7 @@ public String getGemietetVon() {
 
 public String getAll() {
 	return marke + " " + modell + "; " + farbe + "; " + sitzplatz + 
-			"; " + mietpreis ;
+			"; " + mietpreis + "; " + kilometerstand;
 }
 
 public String getKennzeichen () {
