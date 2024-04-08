@@ -140,7 +140,6 @@ public class Main {
 					
 					// add f (vehicle) to list of vehicles
 					fahrzeuge.add(f);
-					
 					// write whole list to file system
 					try {
 						writeToFile(fahrzeuge);
@@ -181,7 +180,7 @@ public class Main {
 				// print vehicles from list which is not rented at the moment
 				for (int i=0; i< fahrzeuge.size(); i++) {
 					if (fahrzeuge.get(i).getGemietetVon() == null) {
-						System.out.println(fahrzeuge.get(i).getAll());
+						System.out.println(fahrzeuge.get(i).toString());
 					}
 				}
 			}

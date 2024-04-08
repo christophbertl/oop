@@ -3,7 +3,7 @@
 import java.io.Serializable;
 
 // implement Serializable to be compatible to In/ Output Streams in main class
-public class Fahrzeug implements Serializable {
+public class Fahrzeug implements Serializable, Comparable<Fahrzeug> {
 
 	// implement Serializable
 	private static final long serialVersionUID = 1L;
@@ -93,14 +93,40 @@ public class Fahrzeug implements Serializable {
 	
 	// methods
 	// display string of all information about this vehicle
-	public String getAll() {
+	@Override
+	public String toString() {
 		return marke + " " + modell + "; " + farbe + "; " + sitzplatz + 
 				"; " + mietpreis + "; " + kilometerstand;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		
+		// check if object is the same object
+		if (this == o) return true;
+		
+		// check if object has the type "Fahrzeug"
+		if (o instanceof Fahrzeug) {
+			
+			// cast object to correct type
+			Fahrzeug f = (Fahrzeug) o;
+			// compare by using equals of string class to compare number plates
+			return getKennzeichen().equals(f.getKennzeichen());
+		}
+		else
+			// use equals of object for objects of other types
+			return super.equals(o);
+	}
+	
+	@Override
+	public int hashCode() {
+		return kennzeichen.hashCode();
+	}
 
-
-
-
+	@Override
+	public int compareTo(Fahrzeug o) {
+		return  (int) (mietpreis - o.getMietpreis());
+	}
 
 
 }
