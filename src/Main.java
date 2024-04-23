@@ -6,9 +6,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+
+import org.apache.log4j.*;
 
 
 public class Main {
@@ -67,17 +75,17 @@ public class Main {
 	}
 	
 	// rent or return car
-	public static void Automieten (String kennzeichen, String nutzerID, List<Fahrzeug> fahrzeuge, int km) {
+	public static void Automieten (String kennzeichen, String nutzerID, Map<String, Fahrzeug> fahrzeuge, int km) {
 		// search car in list of vehicles
-		for (int i=0; i< fahrzeuge.size(); i++) {
+		for (Fahrzeug fahrzeug : fahrzeuge.values()) {
 			// if the number plate matches
-			if (fahrzeuge.get(i).getKennzeichen().equals(kennzeichen)) {
+			if (fahrzeug.getKennzeichen().equals(kennzeichen)) {
 				// add / remove user (if userID == null -> user will be removed from car object)
-				fahrzeuge.get(i).setGemietetVon(nutzerID);
+				fahrzeug.setGemietetVon(nutzerID);
 				
 				// if user returns the car: write new km to car object
 				if (nutzerID == null)  {
-					fahrzeuge.get(i).setKilometerstand(km);
+					fahrzeug.setKilometerstand(km);
 					}
 				
 				// stop iteration if car was found
@@ -90,10 +98,18 @@ public class Main {
 	// main / start of program
 	public static void main(String[] args) {
 		
+		/* logger example
+		 * Logger logger = Logger.getLogger(Main.class.getName());
+		 * logger.error("Error");
+		*/
+		
 		// create necessary variables
 		Scanner scanner = new Scanner(System.in);
 		String eingabe;
-		List<Fahrzeug> fahrzeuge = new ArrayList<>();
+		//List<Fahrzeug> fahrzeuge = new ArrayList<>();
+		//Set<Fahrzeug> fahrzeuge = new HashSet<Fahrzeug>();
+		Map<String, Fahrzeug> fahrzeuge = new HashMap<String, Fahrzeug>();
+		
 		List<Customer> customers = new ArrayList<>();
 		String name, surname, nutzerID;
 		String marke, modell, farbe, kennzeichen;
@@ -101,7 +117,7 @@ public class Main {
 		
 		// restore list of vehicles from file system
 		try {
-			fahrzeuge = readFromFile();
+			fahrzeuge = (HashMap) readFromFile();
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -139,14 +155,16 @@ public class Main {
 							sitzplatz, kilometerstand);
 					
 					// add f (vehicle) to list of vehicles
-					fahrzeuge.add(f);
+					//fahrzeuge.add(f);
+					fahrzeuge.put(f.getKennzeichen(), f);
 					// write whole list to file system
-					try {
-						writeToFile(fahrzeuge);
+					/*try {
+						writeToFile((ArrayList) fahrzeuge);
 					}
 					catch (Exception ex) {
 						System.out.println(ex.getMessage());
 					}
+					*/
 					
 				// catch user type
 				} catch (java.util.InputMismatchException ex) { 
@@ -162,25 +180,39 @@ public class Main {
 				name = scanner.nextLine();
 				System.out.print("    Vorname:");
 				surname = scanner.nextLine();
+				System.out.print("    Geburtstag (DD.MM.YYYY):");
+				String input_birthday = scanner.nextLine();
 				
-				//create customer object
-				Customer c = new Customer( name, surname);
-				
-				// add customer to list of customers
-				customers.add(c);
-				
-				// print the ID if the customer (let him know his ID)
-				System.out.println(c.getID());
+				Date birthday = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+				try {
+					// parse birthday
+					birthday = sdf.parse(input_birthday);
+					
+					//create customer object
+					Customer c = new Customer(name, surname, birthday);
+					System.out.println(c.getAge());
+					// add customer to list of customers
+					customers.add(c);
+					
+					// print the ID if the customer (let him know his ID)
+					System.out.println(c.getID());
+				}	
+				// catch exception if birthday parsing failed
+				catch (java.text.ParseException ex) {
+					System.out.println("Ungültiges Datum");
+				}
+
 			}
 			
 			// display list of available vehicles
 			else if (eingabe.equals("3")) {
 				System.out.println("     verfügbare Fahrzeuge anzeigen");
-				System.out.print("    verfügbare Fahrzeuge:");
+				System.out.println("    verfügbare Fahrzeuge:");
 				// print vehicles from list which is not rented at the moment
-				for (int i=0; i< fahrzeuge.size(); i++) {
-					if (fahrzeuge.get(i).getGemietetVon() == null) {
-						System.out.println(fahrzeuge.get(i).toString());
+				for (Fahrzeug fahrzeug : fahrzeuge.values()) {
+					if (fahrzeug.getGemietetVon() == null) {
+						System.out.println(fahrzeug.toString());
 					}
 				}
 			}

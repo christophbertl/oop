@@ -96,7 +96,7 @@ public class Fahrzeug implements Serializable, Comparable<Fahrzeug> {
 	@Override
 	public String toString() {
 		return marke + " " + modell + "; " + farbe + "; " + sitzplatz + 
-				"; " + mietpreis + "; " + kilometerstand;
+				"; " + mietpreis + "; " + kilometerstand + "; Kennzeichen: " + kennzeichen;
 	}
 	
 	@Override

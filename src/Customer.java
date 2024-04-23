@@ -1,4 +1,9 @@
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Customer {
 
@@ -8,6 +13,7 @@ public class Customer {
 	private String surname;
 	private int pwhash;
 	private int validatePW;
+	private Date birthday;
 	
 	// constructor -------------------------------------------------------------
 	public Customer() {
@@ -15,10 +21,12 @@ public class Customer {
 		userID = UUID.randomUUID().toString();
 	}
 	
-	public Customer (String name, String surname) {
+	public Customer (String name, String surname, Date birthday) {
 		this();
 		this.name = name;
 		this.surname = surname;
+		this.birthday = birthday;
+		// this.birthday.setTime(birthday);
 	}
 	
 	// methods -----------------------------------------------------------------
@@ -79,6 +87,14 @@ public class Customer {
 	public String getID() {
 		return userID;
 	}
+
+	public long getAge() {
+		Date now = new Date();
+		long diff = now.getTime() - birthday.getTime();
+		return TimeUnit.MILLISECONDS.toDays(diff) / 365;
+
+	}
+
 	
 	
 	
