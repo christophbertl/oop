@@ -35,7 +35,8 @@ public class Main {
 	}
 	
 	// write list of vehicles to file
-	public static void writeToFile(List<Fahrzeug> fahrzeuge) throws IOException {
+	public static void writeToFile(Map<String, Fahrzeug> fahrzeuge) throws IOException {
+		
 		/*
 		// example for simple PrintWriter
 		PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
@@ -57,14 +58,14 @@ public class Main {
 	}
 	
 	// read vehicle list from file
-	public static List<Fahrzeug> readFromFile() throws IOException, ClassNotFoundException {
+	public static Map<String, Fahrzeug> readFromFile() throws IOException, ClassNotFoundException {
 		// create file and object input stream
 		FileInputStream fileIn = new FileInputStream("fahrzeuge.txt");
         ObjectInputStream in = new ObjectInputStream(fileIn);
         
         // read object "thru" streams from file and cast it to list of vehicles; save to variable fahrzeuge
         @SuppressWarnings("unchecked")
-		List<Fahrzeug> fahrzeuge = (List<Fahrzeug>) in.readObject();
+        Map<String, Fahrzeug> fahrzeuge = (Map<String, Fahrzeug>) in.readObject();
         
         // close streams
         in.close();
@@ -117,7 +118,7 @@ public class Main {
 		
 		// restore list of vehicles from file system
 		try {
-			fahrzeuge = (HashMap) readFromFile();
+			fahrzeuge = (Map<String, Fahrzeug>) readFromFile();
 		}
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -158,13 +159,13 @@ public class Main {
 					//fahrzeuge.add(f);
 					fahrzeuge.put(f.getKennzeichen(), f);
 					// write whole list to file system
-					/*try {
-						writeToFile((ArrayList) fahrzeuge);
+					try {
+						writeToFile(fahrzeuge);
 					}
 					catch (Exception ex) {
 						System.out.println(ex.getMessage());
 					}
-					*/
+					
 					
 				// catch user type
 				} catch (java.util.InputMismatchException ex) { 
