@@ -1,25 +1,39 @@
 
 // imports
+// import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
+//import java.util.Set;
 
-import org.apache.log4j.*;
+//import org.apache.log4j.*;
+import javax.swing.*;
 
 
 public class Main {
+	public static JTextField txtMarke;
+	public static JTextField txtModell;
+	public static JTextField txtFarbe;
+	public static JTextField txtKennzeichen;
+	public static JTextField txtMietpreis;
+	public static JTextField txtKilometer;
+	public static JTextField txtSitzplatz;
+	public static Map<String, Fahrzeug> fahrzeuge = new HashMap<String, Fahrzeug>();
+
 
 	// show main menu
 	public static String mainMenu(Scanner scanner) {
@@ -94,11 +108,10 @@ public class Main {
 			}
 		}
 	}
-		
 	
 	// main / start of program
 	public static void main(String[] args) {
-		
+				
 		/* logger example
 		 * Logger logger = Logger.getLogger(Main.class.getName());
 		 * logger.error("Error");
@@ -109,7 +122,7 @@ public class Main {
 		String eingabe;
 		//List<Fahrzeug> fahrzeuge = new ArrayList<>();
 		//Set<Fahrzeug> fahrzeuge = new HashSet<Fahrzeug>();
-		Map<String, Fahrzeug> fahrzeuge = new HashMap<String, Fahrzeug>();
+		
 		
 		List<Customer> customers = new ArrayList<>();
 		String name, surname, nutzerID;
@@ -123,6 +136,88 @@ public class Main {
 		catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
+
+		
+		JFrame meinFrame = new JFrame("Autovermietung");
+		meinFrame.setSize(371,318);
+		
+		JButton btnNewButton = new JButton("Fahrzeug anlegen");
+		btnNewButton.setBounds(204, 232, 141, 36);
+		
+		btnNewButton.addActionListener(new ActionSave());
+		
+		meinFrame.getContentPane().setLayout(null);
+		
+		meinFrame.getContentPane().add(btnNewButton);
+		
+		JLabel lblNewLabel = new JLabel("Automarke: ");
+		lblNewLabel.setBounds(29, 31, 77, 17);
+		meinFrame.getContentPane().add(lblNewLabel);
+		
+		txtMarke = new JTextField();
+		txtMarke.setBounds(114, 29, 86, 20);
+		meinFrame.getContentPane().add(txtMarke);
+		txtMarke.setColumns(10);
+		
+		JLabel lblModell = new JLabel("Modell:");
+		lblModell.setBounds(29, 59, 77, 17);
+		meinFrame.getContentPane().add(lblModell);
+		
+		txtModell = new JTextField();
+		txtModell.setColumns(10);
+		txtModell.setBounds(114, 57, 86, 20);
+		meinFrame.getContentPane().add(txtModell);
+		
+		JLabel lblFarbe = new JLabel("Farbe:");
+		lblFarbe.setBounds(29, 93, 77, 17);
+		meinFrame.getContentPane().add(lblFarbe);
+		
+		txtFarbe = new JTextField();
+		txtFarbe.setColumns(10);
+		txtFarbe.setBounds(114, 91, 86, 20);
+		meinFrame.getContentPane().add(txtFarbe);
+		
+		JLabel lblKennzeichen = new JLabel("Kennzeichen:");
+		lblKennzeichen.setBounds(29, 121, 77, 17);
+		meinFrame.getContentPane().add(lblKennzeichen);
+		
+		txtKennzeichen = new JTextField();
+		txtKennzeichen.setColumns(10);
+		txtKennzeichen.setBounds(114, 119, 86, 20);
+		meinFrame.getContentPane().add(txtKennzeichen);
+		
+		JLabel lblFarbe_1_1 = new JLabel("Mietpreis:");
+		lblFarbe_1_1.setBounds(29, 150, 77, 17);
+		meinFrame.getContentPane().add(lblFarbe_1_1);
+		
+		JLabel lblFarbe_1_2 = new JLabel("Kilometerstand:");
+		lblFarbe_1_2.setBounds(29, 184, 77, 17);
+		meinFrame.getContentPane().add(lblFarbe_1_2);
+		
+		JLabel lblFarbe_1_3 = new JLabel("Sitzplätze:");
+		lblFarbe_1_3.setBounds(29, 209, 77, 17);
+		meinFrame.getContentPane().add(lblFarbe_1_3);
+		
+		txtMietpreis = new JTextField();
+		txtMietpreis.setColumns(10);
+		txtMietpreis.setBounds(114, 148, 86, 20);
+		meinFrame.getContentPane().add(txtMietpreis);
+		
+		txtKilometer = new JTextField();
+		txtKilometer.setColumns(10);
+		txtKilometer.setBounds(114, 182, 86, 20);
+		meinFrame.getContentPane().add(txtKilometer);
+		
+		txtSitzplatz = new JTextField();
+		txtSitzplatz.setColumns(10);
+		txtSitzplatz.setBounds(114, 207, 86, 20);
+		meinFrame.getContentPane().add(txtSitzplatz);
+		
+		meinFrame.setVisible(true);
+		
+		
+
+	
 		
 		// main loop for main menu and user interaction
 		while (true) {
@@ -257,5 +352,4 @@ public class Main {
 		System.out.println("beendet");
 		scanner.close();
 	} // main method
-	
 } // main class
